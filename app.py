@@ -11,13 +11,14 @@ import io
 app = flask.Flask(__name__)
 CORS(app)
 model = None
-
+load_model()
 def load_model():
 	# load the pre-trained Keras model (here we are using a model
 	# pre-trained on ImageNet and provided by Keras, but you can
 	# substitute in your own networks just as easily)
 	global model
 	model = ResNet50(weights="imagenet")
+	print("model loaded")
 
 def prepare_image(image, target):
 	# if the image mode is not RGB, convert it
@@ -76,5 +77,5 @@ def predict():
 if __name__ == "__main__":
 	print(("* Loading Keras model and Flask starting server..."
 		"please wait until server has fully started"))
-	load_model()
+	#load_model()
 	app.run(threaded=False)
