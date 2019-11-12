@@ -7,7 +7,9 @@ import flask
 from flask_cors import CORS
 import io
 
-
+app = flask.Flask(__name__)
+CORS(app)
+model = None
 def load_model():
 	# load the pre-trained Keras model (here we are using a model
 	# pre-trained on ImageNet and provided by Keras, but you can
@@ -29,7 +31,7 @@ def prepare_image(image, target):
 
 	# return the processed image
 	return image
-
+load_model()
 @app.route("/predict", methods=["POST"])
 def predict():
 	# initialize the data dictionary that will be returned from the
@@ -67,10 +69,8 @@ def predict():
 	# return the data dictionary as a JSON response
 	return flask.jsonify(data)
 # initialize our Flask application and the Keras model
-app = flask.Flask(__name__)
-CORS(app)
-model = None
-load_model()
+
+
 # if this is the main thread of execution first load the model and
 # then start the server
 #server is single threaded to use a multi thread server change threaded to TRUE
